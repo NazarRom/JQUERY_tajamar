@@ -18,13 +18,12 @@
         $(document).ready(function () {
             $.get("documents/ClientesXML.xml", function (data) {
                 console.log("estoy dentro");
-                var num = 0;
                 $(data).find("CLIENTE").each(function () {
-                    num++;
+                    const index = $(this).attr("IDCLIENTE")
                     var boton = $("<button>", {
                         "type": "button",
                         "id": "info",
-                        "data-id": num
+                        "data-id": index
                     });
                     var br = $("<br/>")
                     boton.text($(this).find("NOMBRE").first().text());
@@ -48,12 +47,12 @@
                             var postal = $(infoCliente).find("CODIGOPOSTAL").first().text();
                             var web = $(infoCliente).find("PAGINAWEB").first().text();
                             var imagen = $(infoCliente).find("IMAGENCLIENTE").text();
-                            var img = $("<img>",{"src": imagen });
-                            
+                            var img = $("<img>", { src: imagen });
+
                             //console.log(img);
                             console.log(imagen);
                             html = " Nombre " + nombre + " Foto " + img;
-                            html +=  "<img src='"+imagen+"'/>" 
+                           //html += "<img src='" + imagen + "'/>"
 
                             $("#infoclientes").append(html);
 
@@ -69,5 +68,59 @@
         })
     </script>
 </body>
+
+
+<!--<h1>Clientes</h1>
+<div id="caja"></div>
+<div id="infoclientes"></div>
+caja para botones--> 
+<!--<script src="jquery-3.6.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $.get("documents/ClientesXML.xml", function (data) {
+            console.log("estoy dentro");
+
+            $(data).find("CLIENTE").each(function () {
+                // El índice se iguala al índice del cliente actual
+                const index = $(this).attr("IDCLIENTE");
+                console.log(index + "ola");
+
+                var boton = $("<button>", {type: "button",});
+                var br = $("<br/>");
+
+                boton.text($(this).find("NOMBRE").first().text());
+
+                boton.click(function () {
+                    $("#infoclientes").text("");
+                    var filtro = "CLIENTE[IDCLIENTE=" + index + "]"; //creo un filtro segun cual esto va a funcionar
+
+                    $.get("documents/ClientesXML.xml", function (data) {
+                        //creo una variable para imprimir los datos
+                        var html = "";
+                        //creo una busqueda con el filto
+                        var infoCliente = $(data).find(filtro).first();
+                        //creo las variables con los datos de las busquedas
+                        var nombre = $(infoCliente).find("NOMBRE").first().text();
+                        var direccion = $(infoCliente).find("DIRECCION").first().text();
+                        var email = $(infoCliente).find("EMAIL").first().text();
+                        var postal = $(infoCliente).find("CODIGOPOSTAL").first().text();
+                        var web = $(infoCliente).find("PAGINAWEB").first().text();
+                        var imagen = $(infoCliente).find("IMAGENCLIENTE").text();
+                        var img = $("<img>", { src: imagen, });
+
+                        html = " Nombre " + nombre;
+                        html += "<img src='" + imagen + "'/>";
+
+                        $("#infoclientes").append(html);
+                    }
+                    );
+                });
+
+                $("#caja").append(boton, br);
+            });
+        });
+    });
+</script>-->
+
 
 </html>
