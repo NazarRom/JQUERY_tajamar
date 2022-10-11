@@ -11,28 +11,61 @@
 <body>
     <h1>Clientes</h1>
     <div id="caja"></div>
+    <div id="infoclientes"></div>
     <!--caja para botones-->
     <script src="js/jquery-3.6.1.min.js"></script>
     <script>
         $(document).ready(function () {
             $.get("documents/ClientesXML.xml", function (data) {
                 console.log("estoy dentro");
+                var num = 0;
                 $(data).find("CLIENTE").each(function () {
-                    var boton = $("<button>");
+                    num++;
+                    var boton = $("<button>", {
+                        "type": "button",
+                        "id": "info",
+                        "data-id": num
+                    });
+                    var br = $("<br/>")
                     boton.text($(this).find("NOMBRE").first().text());
-                    $("#caja").append(boton);
-                })
+
+                    boton.click(function () {
+                        $("#infoclientes").text("");
+                        var numId = $(this).data("id");//recojo el numero de id
+
+                        var filtro = "CLIENTE[IDCLIENTE=" + numId + "]";//creo un filtro segun cual esto va a funcionar
+
+                        $.get("documents/ClientesXML.xml", function (data) {
+                            console.log("estoy dentro 2");
+                            //creo una variable para imprimir los datos
+                            var html = "";
+                            //creo una busqueda con el filto
+                            var infoCliente = $(data).find(filtro).first();
+                            //creo las variables con los datos de las busquedas
+                            var nombre = $(infoCliente).find("NOMBRE").first().text();
+                            var direccion = $(infoCliente).find("DIRECCION").first().text();
+                            var email = $(infoCliente).find("EMAIL").first().text();
+                            var postal = $(infoCliente).find("CODIGOPOSTAL").first().text();
+                            var web = $(infoCliente).find("PAGINAWEB").first().text();
+                            var imagen = $(infoCliente).find("IMAGENCLIENTE").text();
+                            var img = $("<img>",{"src": imagen });
+                            
+                            //console.log(img);
+                            console.log(imagen);
+                            html = " Nombre " + nombre + " Foto " + img;
+                            html +=  "<img src='"+imagen+"'/>" 
+
+                            $("#infoclientes").append(html);
+
+                        });
+
+                    });
+
+                    $("#caja").append(boton, br);
+                });
             });
 
 
-
-            $.get("documents/ClientesXML.xml", function (data) {
-                console.log("estoy dentro");
-                $(data).find("CLIENTE").each(function () {
-                    console.log("estoy dentro 2");
-                var nombre = $(this).find("NOMBRE").first().text();
-                })
-            });
         })
     </script>
 </body>
