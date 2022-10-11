@@ -10,7 +10,14 @@
 
 <body>
     <h1>Departamentos Atributos</h1>
+    <label>Introduzca el ID</label>
+    <input type="text" id="cajaid" />
+    <button type="button" id="botonbuscarid">buscar departatmento</button>
     <button type="button" id="botondepartamentos">Cargar Departamentos</button>
+    <hr />
+    <label>introduzca localidad</label>
+    <input type="text" id="cajalocalidad">
+    <button type="button" id="botonbuscarlocalidad">buscar loc</button>
     <table id="tabladepartamentos">
         <thead>
             <tr>
@@ -24,6 +31,39 @@
 
     <script src="js/jquery-3.6.1.min.js"></script>
     <script>
+        $(document).ready(function () {
+            $("#botonbuscarid").click(function () {
+                var id = $("#cajaid").val();
+                $.get("documents/departamentos.xml", function (data) {
+                    console.log("ola");
+                    var html = "";
+                    var filtro = "DEPT[DEPT_NO=" + id + "]";
+                    //capturamos el nodo de <DEPT>
+                    var nododept = $(data).find(filtro).first();
+                    var nombre = $(nododept).find("DNOMBRE").first().text();
+                    var localidad = $(nododept).find("LOC").first().text();
+                    html += "<tr>";
+                    html += "<td>" + nododept.attr("DEPT_NO") + "</td>";
+                    html += "<td>" + nombre + "</td>";
+                    html += "<td>" + localidad + "</td>";
+                    html += "</tr>"
+                    $("#tabladepartamentos tbody").html(html);
+                });
+            });
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
         $(document).ready(function () {
             $("#botondepartamentos").click(function () {
                 var html = "";
