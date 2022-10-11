@@ -19,6 +19,7 @@
             $("#rango").on("change", function () {
                 var num = parseInt($("#rango").val());
                 $("#cantidad").text(num);
+                $("#pintar").text("");
                 for (var i = 1; i <= num; i++) {
                     var fotos = $("<img>", {
                         "src": "img/miata.jpg",
