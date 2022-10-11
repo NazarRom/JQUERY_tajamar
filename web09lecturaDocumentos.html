@@ -13,6 +13,8 @@
     <script src="js/jquery-3.6.1.min.js"></script>
     <script>
         $(document).ready(function(){
+            
+    //INSTALAR LIVE SERVER
             $("#botonempleados").click(function(){
                 console.log("antes del servicio");
                 $.get("documents/empleados.xml",function(data){
@@ -23,7 +25,7 @@
                         $(data).find("APELLIDO").each(function(){
                             //recuperamos el contenido del tag
                             var apellido = $(this).text();
-                            html += "<li>" + apellido + "<li>";
+                            html += "<li>" + apellido + "</li>";
                         });
                         $("#listaempleados").html(html);
                 })
