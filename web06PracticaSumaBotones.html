@@ -16,7 +16,7 @@
     <script>
         $(document).ready(function () {
             var suma = 0;
-            for (var i = 0; i <= 10; i++) {
+            for (var i = 1; i <= 10; i++) {
                 var random = Math.floor(Math.random() * 10);
                 var botones = $("<button>", {
                     "type": "button",
@@ -24,6 +24,14 @@
                     "text": random,
 
                 });
+                //botones.val(random);
+                //botones.text(random);
+                //botones.click(function(){
+                    //var numero = parseInt($(this).val());
+                    //suma += numero;
+                    //$("#suma").text(suma);
+
+                //})
                 $("#resultado").append(botones);
 
                 botones.on("click", function () {
