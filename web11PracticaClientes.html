@@ -1,12 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-    
+    <h1>Clientes</h1>
+    <div id="caja"></div>
+    <!--caja para botones-->
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.get("documents/ClientesXML.xml", function (data) {
+                console.log("estoy dentro");
+                $(data).find("CLIENTE").each(function () {
+                    var boton = $("<button>");
+                    boton.text($(this).find("NOMBRE").first().text());
+                    $("#caja").append(boton);
+                })
+            });
+
+
+
+            $.get("documents/ClientesXML.xml", function (data) {
+                console.log("estoy dentro");
+                $(data).find("CLIENTE").each(function () {
+                    console.log("estoy dentro 2");
+                var nombre = $(this).find("NOMBRE").first().text();
+                })
+            });
+        })
+    </script>
 </body>
+
 </html>
