@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Cambia fotos</h1>
+    <input type="range" id="rango" min="1" max="15">
+    <div id="padre"></div>
+    <p id="cantidad"></p>
+
+
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#rango").on("change", function () {
+                var range = parseInt($("#rango").val());
+                $("#cantidad").text(range);
+                console.log(range);
+                for (var i = 1; i <= range; i++) {
+                    console.log(range);
+                    var boton = $("<button>", {
+                        "type": "button",
+                        "text":"imagen",
+                        "data-img":"imagen" + i
+
+                    });
+                    var foto = $("<img>", {
+                        "src": "img/miata.jpg",
+                        "width": "150px",
+                        "height": "150px",
+                        "id" : "imagen" + i
+
+                    });
+                    $("#padre").append(foto,boton);
+
+                    boton.click(function(){
+                        var imgId = $(this).data("img");//#id de la foto, esto es (imagen + i)
+                        $("#"+imgId).attr("src","img/miata2.jpg");
+                        
+                        
+                    })
+                }
+               
+            });
+            
+        })
+    </script>
+</body>
+
+</html>
