@@ -29,8 +29,39 @@
         <tbody></tbody>
     </table>
 
+    <h1 style="color:red" id="mensaje"></h1>
+
     <script src="js/jquery-3.6.1.min.js"></script>
     <script>
+        $("#botonbuscarlocalidad").click(function (data) {
+            var loc = $("#cajalocalidad").val();
+            $.get("documents/departamentos.xml", function (data) {
+                //LOC:contains(GIJON)
+                console.log("ola");
+                var filtro = "LOC:contains(" + loc + ")";
+                var html = "";
+                if ($(data).find(filtro).length == 0) {
+                    html = "No existen en departamentos" + loc;
+
+                } else {
+                    $(data).find(filtro).each(function () {
+                        //<LOC>GIJON<LOC>
+                        //<LOC>GIJON<LOC>
+                            html+= $(this).text() + ",";
+
+                    });
+                }
+                $("#mensaje").text(html);
+            })
+
+        });
+
+
+
+
+
+
+
         $(document).ready(function () {
             $("#botonbuscarid").click(function () {
                 var id = $("#cajaid").val();
