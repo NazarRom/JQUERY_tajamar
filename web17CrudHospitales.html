@@ -93,28 +93,14 @@
                   //para modificar
                   $("#modificacion").click(function () {
                     console.log("ola modi")
-                    var id = $("#cajaid").val();
-                    var nom = $("#cajanombre").val();
-                    var dir = $("#cajadireccion").val();
-                    var tel = $("#cajatelefono").val();
-                    var cama = $("#cajacamas").val();
+                    var datoJson = getJsonData();
 
-                    var hospi = new Object();
-
-                    hospi.idhospital = id;
-                    hospi.nombre = nom;
-                    hospi.direccion = dir;
-                    hospi.telefono = tel;
-                    hospi.camas = cama;
-
-                    var dataJson = JSON.stringify(hospi);
-
-                    console.log(dataJson);
+                    console.log(datoJson);
                     var request = "/webresources/hospitales/put";
                     $.ajax({
                       "url": url + request,
                       "type": "PUT",
-                      "data": dataJson,
+                      "data": datoJson,
                       "contentType": "application/json",
                       success: function () {
                         console.log("Modificado");
@@ -170,7 +156,7 @@
 
             //insertar
             $("#insertarhospital").click(function () {
-             // $("#insertarhospital").attr("hidden",true);
+              // $("#insertarhospital").attr("hidden",true);
               if ($("#aux").prop("hidden", false)) {
 
                 var confirmar = $("<button>", {
@@ -184,28 +170,14 @@
                 console.log("perro");
                 $("#confirmacion").click(function () {
                   console.log("gato");
-                  var id = $("#cajaid").val();
-                  var nom = $("#cajanombre").val();
-                  var dir = $("#cajadireccion").val();
-                  var tel = $("#cajatelefono").val();
-                  var cama = $("#cajacamas").val();
 
-                  var hospi = new Object();
-
-                  hospi.idhospital = id;
-                  hospi.nombre = nom;
-                  hospi.direccion = dir;
-                  hospi.telefono = tel;
-                  hospi.camas = cama;
-
-                  var dataJson = JSON.stringify(hospi);
-
-                  console.log(dataJson);
+                  var datoJson = getJsonData();
+                  console.log(datoJson);
                   var request = "/webresources/hospitales/post";
                   $.ajax({
                     "url": url + request,
                     "type": "POST",
-                    "data": dataJson,
+                    "data": datoJson,
                     "contentType": "application/json",
                     success: function () {
                       console.log("Modificado");
@@ -220,7 +192,24 @@
 
         });
       }
+      function getJsonData() {
+        var id = $("#cajaid").val();
+        var nom = $("#cajanombre").val();
+        var dir = $("#cajadireccion").val();
+        var tel = $("#cajatelefono").val();
+        var cama = $("#cajacamas").val();
 
+        var hospi = new Object();
+
+        hospi.idhospital = id;
+        hospi.nombre = nom;
+        hospi.direccion = dir;
+        hospi.telefono = tel;
+        hospi.camas = cama;
+
+        var dataJson = JSON.stringify(hospi);
+        return dataJson;
+      }
 
       //esto es para insertar la información
       $(document).ready(function () {
