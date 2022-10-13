@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Jugadores Json</h1>
+    <select id="selectjugadores"></select>
+    <div id="contenido"></div>
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            //al seleccionar un elemento en el option
+            //mostramos los datos del jugador
+            //no existen busquedas 
+            //debemos leer todo
+            //y dibujar todo
+            $("#selectjugadores").change(function(){
+                console.log("aqui");
+    //ahora recuperamos el indice del elemento seleccionado
+    var index = $(this).prop("selectedIndex");
+    //debemos acceder de nuevo al servicio
+    $.ajax({
+        "url":"documents/jugadores.json",
+        "method":"GET",
+        success:function(data){
+            var jugador = data.jugadores[index];
+            var html ="<h1>" + jugador.nombre +"</h1>";
+            html +="<h1>" + jugador.posicion +"</h1>";
+            html +="<h1>" + jugador.edad +"</h1>";
+            html +="<img src='" + jugador.imagen +"' " + " style='width:150px;height:150px'/>";
+            $("#contenido").html(html);
+        }
+    })
+            });
+
+
+
+
+            //al ininciar leemos todos los jugadores y los guardamos en el select
+            $.getJSON("documents/jugadores.json",function(data){
+                $.each(data.jugadores, function(index, jugador){
+                    var name = jugador.nombre;
+                    //creamos un <option> por cada jugador
+                        var option = $("<option>",{
+                            "text":name
+                        });
+                        $("#selectjugadores").append(option);
+            });
+        });
+    });
+    </script>
+</body>
+</html>
