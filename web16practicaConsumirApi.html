@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Api jquey json</h1>
+    <table border="1" id="tabladepartamentos">
+        <thead>
+            <tr>
+                <th>Número</th>
+                <th>Nombre</th>
+                <th>Localidad</th>
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <table border="1" id="tablaclientes">
+        <thead>
+            <tr>
+                <th>Número</th>
+                <th>Nombre</th>
+                <th>Localidad</th>
+                <th>Departamento</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <script src="js/jquery-3.6.1.min.js"></script>
+    <script>
+        var urlDep = "https://apicruddepartamentoscore.azurewebsites.net/";
+        var urlCli = "https://apiempleadosspgs.azurewebsites.net/";
+
+        function cargarDepartamentos() {
+            var request = "/api/departamentos";
+            $.ajax({
+                "url": urlDep + request,
+                "method": "GET",
+                "dataType": "json"
+                , success: function (data) {
+                    var html = "";
+                    $.each(data, function (index, dept) {
+                        html += "<tr>";
+                        html += "<td>" + dept.numero + "</td>";
+                        html += "<td>" + dept.nombre + "</td>";
+                        html += "<td>" + dept.localidad + "</td>";
+                        html += "<td> <a href='#' data-key=" + dept.numero + ">Empleados</a>" + "</td>";
+                        console.log(dept.numero);
+                        html += "</tr>";
+                    });
+                    $("#tabladepartamentos tbody").html(html);
+                    $("a").click(function () {
+                        var ndept = parseInt($(this).data("key"));
+                        buscarEmpleados(ndept);
+
+                    })
+                }
+
+            });
+        }
+
+        $(document).ready(function () {
+            cargarDepartamentos();
+        });
+
+        function buscarEmpleados(ndept) {
+            var request = "api/Empleados/EmpleadosDepartamento/";
+            $.getJSON(urlCli + request + ndept, function (data) {
+                $.each(data, function () {
+                    var idempleado = this.idEmpleado;
+                    var apellido = this.apellido;
+                    var oficio = this.oficio;
+                    var salario = this.salario;
+                    var departamento = this.departamento;
+
+                    console.log(apellido);
+
+                    var html = "";
+                    $.each(data, function (index, dept) {
+                        html += "<tr>";
+                        html += "<td>" + dept.idEmpleado + "</td>";
+                        html += "<td>" +  dept.apellido + "</td>";
+                        html += "<td>" +  dept.oficio + "</td>";
+                        html += "<td>" +  dept.salario + "</td>";
+                        html += "<td>" + dept.departamento + "</td>";
+                        html += "</tr>";
+                    });
+                    $("#tablaclientes tbody").html(html);
+                });
+               
+            })
+        }
+    </script>
+</body>
+
+</html>
