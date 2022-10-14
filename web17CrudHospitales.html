@@ -78,8 +78,10 @@
               //este es el de la fila para sacar los inputs
               boton.click(function () {
                 console.log("perrote");
-                //$("#insertarhospital").attr("hidden",true);
+                $("#change").text("");//limpio change
+                //$("#insertarhospital").prop("hidden",true);
                 $("#confirmacion").prop("hidden", true);
+                
                 //quitamos el hidden del div
                 if ($("#aux").prop("hidden", false)) {
 
@@ -90,11 +92,11 @@
                   $("#change").append(modificacion);
 
                   $("#change").prop("hidden", false);
-                  //para modificar
+                  //para confirmar modificar
                   $("#modificacion").click(function () {
+                    
                     console.log("ola modi")
                     var datoJson = getJsonData();
-
                     console.log(datoJson);
                     var request = "/webresources/hospitales/put";
                     $.ajax({
@@ -156,7 +158,9 @@
 
             //insertar
             $("#insertarhospital").click(function () {
-              // $("#insertarhospital").attr("hidden",true);
+              $("#confirm").text("");//limpio insert
+              
+              $("#modificacion").prop("hidden",true);
               if ($("#aux").prop("hidden", false)) {
 
                 var confirmar = $("<button>", {
@@ -164,11 +168,12 @@
                   "id": "confirmacion"
                 });
                 $("#confirm").append(confirmar);
-
+                
                 $("#confirm").prop("hidden", false);
 
                 console.log("perro");
                 $("#confirmacion").click(function () {
+                  
                   console.log("gato");
 
                   var datoJson = getJsonData();
